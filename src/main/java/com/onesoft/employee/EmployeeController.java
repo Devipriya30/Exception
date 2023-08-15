@@ -106,6 +106,7 @@ public class EmployeeController {
 	//table in order the name
 	@GetMapping(value="/orderbyname")
 	public List<String> OrderEmployeeName() {
+		System.out.println("exception2");
 		return empser.OrderEmployeeName();
 	}
 	//employeecontroller for cardetails get
