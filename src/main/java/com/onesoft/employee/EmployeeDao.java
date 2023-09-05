@@ -2,10 +2,14 @@ package com.onesoft.employee;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 @Repository
 public class EmployeeDao {
+	static Logger log=Logger.getLogger(EmployeeDao.class);
+	
 	@Autowired
 	EmployeeRepository empRep;
 	//exception method also
@@ -13,15 +17,25 @@ public class EmployeeDao {
 		empRep.save(e);
 		return "suseccfully added";
 	}
+	public List<Employee> getEmployeeName1(String name){
+		return empRep.findAll();
+	}
 	
 	
-	public Employee addEmployee1( int id) {
-		return empRep.findById(id).get();
+	public List<Employee> addEmployee1( ) {
+		PropertyConfigurator.configure("log.properties");
+		log.info(empRep.findAll());
+		return empRep.findAll();
 		}
 	public String addEmployee2( List<Employee> emp){
 		 empRep.saveAll(emp);
 		 return "List of employee";
 	}
+//	public Employee addEmployee1( ) {
+//		PropertyConfigurator.configure("log.properties");
+//		log.info("Employeedao run");
+//		return empRep.findById(id).get();
+//		}
 	//all employee
 	public List<Employee> getEmp(){
 		return empRep.findAll();

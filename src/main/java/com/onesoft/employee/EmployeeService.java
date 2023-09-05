@@ -3,17 +3,22 @@ package com.onesoft.employee;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeService {
+	static Logger log=Logger.getLogger(EmployeeService.class);
 	@Autowired
 	EmployeeDao empDao;
 	
 	
-	public Employee addEmployee1(int id) {
-		return empDao.addEmployee1(id);
+	public List<Employee> addEmployee1() {
+		PropertyConfigurator.configure("log.properties");
+		log.info(empDao.addEmployee1());
+		return empDao.addEmployee1();
 	}
 	public String addEmployee2( List<Employee> emp){
 		return empDao.addEmployee2(emp);
@@ -68,6 +73,9 @@ public class EmployeeService {
 		List<Employee>allEMP=empDao.getEmp();
 		return allEMP.stream().map(x->x.getSalary()).toList();
 		}
+	public List<Employee> getEmployeeName1(String name){
+		return empDao.getEmployeeName1(name);
+	}
 	
 	public List<Integer> getEmp5(){
 		List<Employee>allEMP=empDao.getEmp();

@@ -2,6 +2,8 @@ package com.onesoft.employee;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -19,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping(value="/employee")
 public class EmployeeController {
+	static Logger log=Logger.getLogger(EmployeeController.class);
 	@Autowired
 	EmployeeService empser;
 	//post exception method also
@@ -27,11 +30,12 @@ public class EmployeeController {
 		return empser.addEmployee(e);
 	}
 	//2...........integer get 
-	@GetMapping(value="/add1/{id}")
-	public Employee addEmployee1(@PathVariable int id) {
-		return empser.addEmployee1(id);
+	@GetMapping(value="/add1")
+	public List<Employee> addEmployee1() {
+		PropertyConfigurator.configure("log.properties");
+		log.info(empser.addEmployee1());
+		return empser.addEmployee1();
 	}
-	
 	@PostMapping(value="/setList")
 	public String addEmployee2(@RequestBody List<Employee> emp){
 		return empser.addEmployee2(emp);
@@ -40,6 +44,10 @@ public class EmployeeController {
 		public List<Employee> getEmployeeName(@PathVariable String name)throws NameNotFoundException{
 			return empser.getEmployeeName(name);
 		}
+	@GetMapping(value="/getByName2/{name}")
+	public List<Employee> getEmployeeName1(@PathVariable String name){
+		return empser.getEmployeeName1(name);
+	}
 	
 	@DeleteMapping(value="/delete/{id}")
 	public String delemp(@PathVariable int id){
@@ -110,8 +118,9 @@ public class EmployeeController {
 		return empser.OrderEmployeeName();
 	}
 	//employeecontroller for cardetails get
-	
-	RestTemplate rest=new RestTemplate();
+	@Autowired
+	RestTemplate rest;
+	//RestTemplate rest=new RestTemplate();
 	@GetMapping(value="/getEmployeeviaCar")
 	public List<Car> getEmployeeviaCar(){
 		String url="http://localhost:8081/car/check";
@@ -119,7 +128,9 @@ public class EmployeeController {
 	List<Car> value=response.getBody();
 	return value;
 	}
-	RestTemplate rest1=new RestTemplate();
+	@Autowired
+	RestTemplate rest1;
+//	RestTemplate rest1=new RestTemplate();
 	@GetMapping(value="/getCaridviaemployee/{price}")
 	public Car getcarIdviaemployee(@PathVariable int price){
 		String url="http://localhost:8081/car/add1/";
@@ -127,5 +138,7 @@ public class EmployeeController {
 	Car value=response.getBody();
 	return value;
 	}
+	
+	
 	
 }

@@ -1,7 +1,5 @@
 package com.onesoft.employee;
 
-import org.springframework.web.bind.annotation.GetMapping;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +16,7 @@ public class Employee {
 	private int id;
 	private String name;
 	private String gender;
+	
 	private int salary;
 	private int yearOfExperience;
 	private int age;
@@ -57,6 +56,11 @@ public class Employee {
 	}
 	public void setYearOfExperience(int yearOfExperience) {
 		this.yearOfExperience = yearOfExperience;
+	}
+	
+	public String toString() {
+		return "Employee [id=" + id + ", name=" + name + ", gender=" + gender + ", salary=" + salary
+				+ ", yearOfExperience=" + yearOfExperience + ", age=" + age + "]";
 	}
 	
 
